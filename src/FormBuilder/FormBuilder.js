@@ -8,6 +8,7 @@ import Button from '../component/Button';
 import Blocker from '../component/Blocker';
 import Loading from '../component/Loading';
 import postFormData from '../common/postFormData';
+import { tryStoreForm } from '../common/MyFormStorage';
 import MenuItems from './MenuItems';
 import ItemPanel from './ItemPanel';
 import FormPanel from './FormPanel';
@@ -25,8 +26,6 @@ const STORE_KEY = 'form_elements';
 
 // 提交地址
 const SUBMIT_URL = 'http://api.heruji.me/powerform/form';
-// 提交成功跳转地址
-const SUCCESS_URL = '/builder/submitSuccess';
 
 // 默认表单标题元素
 const DEFAULT_FORM_TITLE = {
@@ -118,7 +117,8 @@ class FormBuilder extends React.Component {
         }
         // 向 SUBMIT_URL 提交当前的表单元素集合
         postFormData(SUBMIT_URL, formElements, this.handleSubmitResult,
-            () => {
+            err => {
+                console.log(err);
                 alert('表单提交失败, 请稍后重试');
                 this.setState({
                     status: STATUS.DEFAULT
@@ -134,6 +134,8 @@ class FormBuilder extends React.Component {
     // 处理提交成功后返回的表单数据
     handleSubmitResult = form => {
         this.form = form;
+        // 存储表单
+        tryStoreForm(this.state.formElements[0].title, form);
         // 提交成功后删除暂存的表单元素集合
         this.tryRemoveFormElements();
         // 修改状态为 "提交成功"
@@ -171,13 +173,17 @@ class FormBuilder extends React.Component {
     tryStoreFormElements = formElements => {
         try {
             localStorage.setItem(STORE_KEY, JSON.stringify(formElements));
-        } catch (e) { }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     tryRemoveFormElements = () => {
         try {
             localStorage.removeItem(STORE_KEY);
-        } catch (e) { }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     // ========================================================================
@@ -188,24 +194,25 @@ class FormBuilder extends React.Component {
         if (status === STATUS.SUCCESS) {
             return (
                 <Redirect push to={{
-                    pathname: SUCCESS_URL,
+                    pathname: '/builder/submitSuccess',
                     state: { form: this.form }
                 }} />
             );
         }
         // 渲染页面
+        const isLoading = status === STATUS.LOADING;
         return (
             <React.Fragment>
                 <HeaderPanel>
                     <Button
                         onClick={this.handleReset}
                         content="重置"
-                        disabled={status === STATUS.LOADING}
+                        disabled={isLoading}
                     />
                     <Button
                         onClick={this.handleSubmit}
-                        content={status === STATUS.LOADING ? (<Loading />) : '提交'}
-                        disabled={status === STATUS.LOADING}
+                        content={isLoading ? (<Loading />) : '提交'}
+                        disabled={isLoading}
                         fixedWidth={true}
                     />
                 </HeaderPanel>
@@ -225,7 +232,7 @@ class FormBuilder extends React.Component {
                         onChange={this.handleChangeElement}
                     />
                 </Container>
-                {status === STATUS.LOADING && (<Blocker />)}
+                {isLoading && (<Blocker />)}
             </React.Fragment>
         );
     }

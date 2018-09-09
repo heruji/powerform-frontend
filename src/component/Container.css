@@ -21,7 +21,7 @@
     grid-template-columns: 635px 295px;
     grid-template-rows: 100%;
     grid-template-areas:
-        "main aside"
+        "main menu"
 }
 
 .container-single {

@@ -1,0 +1,40 @@
+.my-form-link {
+    display: inline-block;
+    width: 100%;
+    padding: 8px 20px;
+    color: #1a1a1a;
+}
+
+.my-form-link:visited {
+    color: #1a1a1a;
+}
+
+.my-form-link:hover {
+    color: #1a1a1a;
+    opacity: 0.7;
+}
+
+.my-form-link span:nth-child(1) {
+    display: inline-block;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.1em;
+    overflow: hidden;
+}
+
+.my-form-link span:nth-child(3) {
+    color: #868686;
+    font-style: italic;
+}
+
+.my-form-sep {
+    margin: -5px 20px 15px;
+    border: 0.5px solid #bbbbbb;
+}
+
+.my-form-control {
+    display: flex;
+    justify-content: flex-end;
+    margin: 15px 20px;
+}

@@ -4,6 +4,7 @@ import Container from '../component/Container';
 import Panel from '../component/Panel';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import MyFormPanel from './MyFormPanel';
 
 class Home extends React.Component {
     render() {
@@ -35,11 +36,7 @@ class Home extends React.Component {
                             </div>
                         }
                     />
-                    <Panel
-                        title="我的表单"
-                        type="aside"
-                        content={null}
-                    />
+                    <MyFormPanel />
                 </Container>
             </React.Fragment>
         );

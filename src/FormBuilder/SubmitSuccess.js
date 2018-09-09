@@ -4,6 +4,7 @@ import HeaderPanel from '../component/HeaderPanel';
 import Panel from '../component/Panel';
 import { Link, Redirect } from 'react-router-dom';
 import QRCode from 'qrcode.react';
+import MyFormPanel from '../Home/MyFormPanel';
 import './SubmitSuccess.css';
 
 const URL_PREFIX = 'http://demo.heruji.me/powerform';
@@ -43,11 +44,7 @@ function SubmitSuccess(props) {
                     title="表单提交成功!"
                     content={content}
                 />
-                <Panel
-                    title="我的表单"
-                    type="aside"
-                    content={null}
-                />
+                <MyFormPanel />
             </Container>
         </React.Fragment>
     );
