@@ -1,0 +1,13 @@
+.selectable {
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.selectable:hover {
+    border: 2px solid rgba(255, 99, 71, 0.5);
+}
+
+.selectable.selected {
+    border: 2px solid tomato;
+    background-color: rgba(255, 207, 198, 0.5);
+}

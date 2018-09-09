@@ -1,0 +1,12 @@
+.submit-success p {
+    font-size: 1.1em;
+}
+
+.submit-success hr {
+    margin: 40px 0;
+}
+
+.submit-success canvas {
+    display: block;
+    margin: 20px auto;
+}

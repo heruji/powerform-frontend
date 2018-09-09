@@ -1,0 +1,14 @@
+.item-option {
+    list-style-type: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+}
+  
+.item-option input {
+    margin-right: 10px;
+}
+
+.item-option-list {
+    margin: 0;
+    padding: 0 0 0 20px;
+}

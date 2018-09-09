@@ -1,0 +1,11 @@
+.subcontainer {
+  box-shadow: 0 1px 3px rgba(26,26,26,.1);
+  background: #fff;
+  border-radius: 2px;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.subcontainer.fit {
+  height: 100%;
+}

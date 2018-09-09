@@ -1,0 +1,11 @@
+.form-title {
+    margin: 0;
+    text-align: center;
+}
+
+.form-info {
+    color: #4d5566;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    white-space: pre;
+}

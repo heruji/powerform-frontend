@@ -1,0 +1,54 @@
+.header {
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
+    background: #fff;
+    overflow: hidden;
+}
+
+.header-inner {
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.header-inner.slim {
+    max-width: 500px;
+    padding: 0 5px;
+}
+
+.header-banner {
+    margin: 0;
+    text-align: center;
+}
+
+.header-inner ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.header-inner li {
+    list-style-type: none;
+    padding: 0 8px;
+}
+
+.header-banner a {
+    text-decoration: none;
+    color: #1a1a1a;
+}
+
+.header-banner a:visited {
+    color: #1a1a1a;
+}
+
+.header-banner a:hover {
+    color: #1a1a1a;
+}

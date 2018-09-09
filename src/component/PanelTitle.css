@@ -1,0 +1,14 @@
+.panel-title {
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    font-size: 1.2em;
+    background-color: rgb(238, 119, 22);
+    color: #fff;
+}
+
+.panel-title-none {
+    height: 5px;
+    background-color: rgb(238, 119, 22);
+    border-radius: 2px;
+}

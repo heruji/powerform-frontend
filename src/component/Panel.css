@@ -1,0 +1,74 @@
+.panel-menu {
+    grid-area: menu;
+}
+
+.panel-menu .panel-content {
+    max-height: calc(100% - 45px);
+    overflow: scroll;
+}
+
+.panel-menu .panel-content>ul, .panel-menu .panel-content>ol {
+    padding: 0;
+    margin: 15px 0 20px;
+}
+
+.panel-menu .panel-content>ul>li, .panel-menu .panel-content>ol>li {
+    list-style-type: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    color: #4d5566;
+}
+  
+.panel-menu .panel-content>ul>li:hover, .panel-menu .panel-content>ol>li:hover {
+    background-color: #f6f6f6;
+}
+
+/* ======================================= */
+
+.panel-main {
+    grid-area: main;
+}
+
+.panel-main .panel-content {
+    max-height: calc(100% - 45px);
+    overflow: scroll;
+}
+
+.panel-main .panel-content>ul, .panel-main .panel-content>ol {
+    padding: 0 10px;
+    margin: 10px 0;
+}
+
+.panel-main .panel-content>ul>li, .panel-main .panel-content>ol>li {
+    list-style-type: none;
+    padding: 8px 10px;
+    margin: 0;
+}
+
+/* ======================================= */
+
+.panel-aside {
+    grid-area: aside;
+}
+
+.panel-aside .panel-content {
+    padding: 0 12px;
+}
+
+.panel-aside .panel-content>ul {
+    padding: 0;
+    margin: 15px 0 20px;
+}
+
+.panel-aside .panel-content>ul>li {
+    list-style-type: none;
+    padding: 0;
+    margin: 12px 0;
+}
+
+/* ======================================= */
+
+.panel-default .panel-content {
+    grid-area: main;
+    padding: 20px 40px;
+}

@@ -1,0 +1,32 @@
+.corner-btn {
+    color: tomato;
+    cursor: pointer;
+    font-size: 1.1em;
+    top: 0;
+    right: 6px;
+    position: absolute; 
+}
+
+.corner-btn:hover {
+    color: rgba(255, 99, 71, 0.8);
+}
+
+.hoverable-corner-btn {
+    position: relative;
+}
+
+.hoverable-corner-btn .corner-btn {
+    display: none;
+}
+
+.hoverable-corner-btn:hover .corner-btn {
+    display: block;
+}
+
+.corner-btn-close::before {
+    content: "\2716";
+}
+
+.corner-btn-add::before {
+    content: "\271A";
+}
