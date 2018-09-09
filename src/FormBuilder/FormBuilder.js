@@ -2,23 +2,23 @@ import React from 'react';
 import update from 'immutability-helper';
 import shortid from 'shortid';
 import { Redirect } from 'react-router-dom/';
-
 import Container from '../component/Container';
-import SubmitButton from '../component/SubmitButton';
 import HeaderPanel from '../component/HeaderPanel';
 import Button from '../component/Button';
 import Blocker from '../component/Blocker';
+import Loading from '../component/Loading';
 import postFormData from '../common/postFormData';
-
 import MenuItems from './MenuItems';
 import ItemPanel from './ItemPanel';
 import FormPanel from './FormPanel';
 import PropertyPanel from './PropertyPanel';
 
 // 提交状态: 0 - 默认, 1 - 提交中, 2 - 提交成功
-const STATUS_DEFAULT = 0;
-const STATUS_LOADING = 1;
-const STATUS_SUCCESS = 2;
+const STATUS = Object.freeze({
+    DEFAULT: 0,
+    LOADING: 1,
+    SUCCESS: 2
+});
 
 // 本地存储表单元素集合的key
 const STORE_KEY = 'form_elements';
@@ -36,7 +36,7 @@ const DEFAULT_FORM_TITLE = {
     type: 'form'
 };
 
-// 构建表单的页面
+// 表单构建器
 class FormBuilder extends React.Component {
     constructor(props) {
         super(props);
@@ -55,7 +55,7 @@ class FormBuilder extends React.Component {
             // 当前选中的表单项的key
             selectedElemKey: null,
             // 提交状态
-            status: STATUS_DEFAULT
+            status: STATUS.DEFAULT
         };
     }
 
@@ -110,40 +110,42 @@ class FormBuilder extends React.Component {
     // 表单提交
     handleSubmit = () => {
         const { formElements } = this.state;
-        if (formElements.length === 1) {
-            alert('尚未添加标单项');
+        // 如果元素列表中没有除表头和分割线以外的其他元素, 则表示表单是空的, 不提交
+        const reducer = (acc, curr) => acc + !['form', 'sep'].includes(curr.type);
+        if (formElements.reduce(reducer, 0) === 0) {
+            alert('尚未添加表单项');
             return;
         }
+        // 向 SUBMIT_URL 提交当前的表单元素集合
         postFormData(SUBMIT_URL, formElements, this.handleSubmitResult,
             () => {
-                alert('表单提交失败');
+                alert('表单提交失败, 请稍后重试');
                 this.setState({
-                    status: STATUS_DEFAULT
+                    status: STATUS.DEFAULT
                 });
             }
         );
+        // 修改状态为 "正在提交"
         this.setState({
-            status: STATUS_LOADING
+            status: STATUS.LOADING
         });
     };
 
     // 处理提交成功后返回的表单数据
     handleSubmitResult = form => {
         this.form = form;
-        try {
-            localStorage.removeItem(STORE_KEY);
-        } catch (e) { }
+        // 提交成功后删除暂存的表单元素集合
+        this.tryRemoveFormElements();
+        // 修改状态为 "提交成功"
         this.setState({
-            status: STATUS_SUCCESS
+            status: STATUS.SUCCESS
         });
     };
 
     // 处理表单重置
     handleReset = () => {
         if (window.confirm('您确定要重置吗?')) {
-            try {
-                localStorage.removeItem(STORE_KEY);
-            } catch (e) { }
+            this.tryRemoveFormElements();
             this.setState({
                 formElements: [DEFAULT_FORM_TITLE],
                 selectedElemKey: null
@@ -163,21 +165,27 @@ class FormBuilder extends React.Component {
     // 根据key查找元素
     findElementByElemKey = elemKey => {
         return this.state.formElements.find(elem => elem.elemKey === elemKey);
-    }
+    };
 
     // 尝试保存表单元素集合
     tryStoreFormElements = formElements => {
         try {
             localStorage.setItem(STORE_KEY, JSON.stringify(formElements));
         } catch (e) { }
-    }
+    };
+
+    tryRemoveFormElements = () => {
+        try {
+            localStorage.removeItem(STORE_KEY);
+        } catch (e) { }
+    };
 
     // ========================================================================
 
     render() {
         const { formElements, selectedElemKey, status } = this.state;
         // 表单数据提交成功, 则跳转成功页面
-        if (status === STATUS_SUCCESS) {
+        if (status === STATUS.SUCCESS) {
             return (
                 <Redirect push to={{
                     pathname: SUCCESS_URL,
@@ -192,11 +200,13 @@ class FormBuilder extends React.Component {
                     <Button
                         onClick={this.handleReset}
                         content="重置"
-                        disabled={status === STATUS_LOADING}
+                        disabled={status === STATUS.LOADING}
                     />
-                    <SubmitButton
-                        onSubmit={this.handleSubmit}
-                        isLoading={status === STATUS_LOADING}
+                    <Button
+                        onClick={this.handleSubmit}
+                        content={status === STATUS.LOADING ? (<Loading />) : '提交'}
+                        disabled={status === STATUS.LOADING}
+                        fixedWidth={true}
                     />
                 </HeaderPanel>
                 <Container type="grid">
@@ -215,7 +225,7 @@ class FormBuilder extends React.Component {
                         onChange={this.handleChangeElement}
                     />
                 </Container>
-                {status === STATUS_LOADING && (<Blocker />)}
+                {status === STATUS.LOADING && (<Blocker />)}
             </React.Fragment>
         );
     }

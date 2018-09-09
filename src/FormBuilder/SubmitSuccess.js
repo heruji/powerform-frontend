@@ -38,10 +38,9 @@ function SubmitSuccess(props) {
     return (
         <React.Fragment>
             <HeaderPanel />
-            <Container type="default">
+            <Container>
                 <Panel
                     title="表单提交成功!"
-                    type="default"
                     content={content}
                 />
                 <Panel

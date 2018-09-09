@@ -7,7 +7,7 @@ import './Panel.css';
 function Panel({ title, type, fit, content, empty, emptyHint }) {
     const showEmptyHint = empty === undefined ? !content : empty;
     return (
-        <div className={`panel-${type}`}>
+        <div className={`panel-${type || 'default'}`}>
             <SubContainer fit={fit}>
                 <PanelTitle content={title} />
                 <div className="panel-content">{content}</div>

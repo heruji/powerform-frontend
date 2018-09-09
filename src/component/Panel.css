@@ -1,10 +1,12 @@
-.panel-menu {
-    grid-area: menu;
-}
-
-.panel-menu .panel-content {
+.panel-content {
     max-height: calc(100% - 45px);
     overflow: scroll;
+}
+
+/* ======================================= */
+
+.panel-menu {
+    grid-area: menu;
 }
 
 .panel-menu .panel-content>ul, .panel-menu .panel-content>ol {
@@ -27,11 +29,6 @@
 
 .panel-main {
     grid-area: main;
-}
-
-.panel-main .panel-content {
-    max-height: calc(100% - 45px);
-    overflow: scroll;
 }
 
 .panel-main .panel-content>ul, .panel-main .panel-content>ol {
