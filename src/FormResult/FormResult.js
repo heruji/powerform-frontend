@@ -1,10 +1,14 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import QRCode from 'qrcode.react';
 import HeaderPanel from '../component/HeaderPanel';
 import Container from '../component/Container';
 import Panel from '../component/Panel';
 import Loading from '../component/Loading';
+import Tooltip from '../component/Tooltip';
+import CopyButton from '../component/CopyButton';
 import ItemTypeMapper from '../common/ItemTypeMapper';
+import './FormResult.css';
 
 const STATUS = Object.freeze({
     LOADING: 0,
@@ -153,9 +157,20 @@ class FormResult extends React.Component {
                 <Loading dark />
             </div>
         ) : this.renderResultList();
+        const url = `http://demo.heruji.me/powerform/display/${this.props.match.params.id}`;
         return (
             <React.Fragment>
-                <HeaderPanel />
+                <HeaderPanel>
+                    <Tooltip
+                        content={<QRCode value={url} />}
+                        display={<QRCode size={35} value="display" />}
+                    />
+                    <CopyButton copyText={url} />
+                    <a className="export-btn-link" 
+                        href={`http://api.heruji.me/powerform/form/${this.props.match.params.id}/result/xlsx`}>
+                        导出 XLSX
+                    </a>
+                </HeaderPanel>
                 <Container type="double">
                     <Panel
                         title="反馈列表"

@@ -16,11 +16,17 @@ class App extends React.Component {
         return (
             <Router basename="/powerform">
                 <Switch>
+                    {/* 主页 */}
                     <Route path="/" exact component={Home} />
+                    {/* 表单构建器 */}
                     <Route path="/builder" exact component={FormBuilder} />
+                    {/* 构建表单提交成功 */}
                     <Route path="/builder/submitSuccess" component={SubmitSuccess} />
+                    {/* 表单反馈展示 */}
                     <Route path="/result/:id" component={FormResult} />
+                    {/* 填表页面 */}
                     <Route path="/display/:id" component={FormDisplay} />
+                    {/* 错误页面 */}
                     <Route component={() => (
                         <h1 style={{ margin: '0', lineHeight: '50vh', textAlign: 'center' }}>
                             ERROR

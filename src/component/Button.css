@@ -1,10 +1,9 @@
 .btn {
     height: 35px;
     text-align: center;
-    background-color: #0084ff;
     color: #fff;
     font-size: 1.1em;
-    border: 1px solid;
+    border: 1px solid transparent;
     border-radius: 3px;
     cursor: pointer;
     outline: none;
@@ -12,17 +11,24 @@
     padding: 0 15px;
 }
 
-.btn:hover:not(:disabled) {
-    border-color: #0077e6;
+.btn.btn-type-default:hover:not(:disabled) {
     background-color: #0077e6;
 }
 
-.btn:disabled {
+.btn.btn-type-default:disabled {
     cursor: default;
     opacity: 0.5;
+}
+
+.btn.btn-type-default {
+    background-color: #0084ff;
 }
 
 .btn.btn-fix-width {
     width: 65px;
     padding: 0;
+}
+
+.btn.btn-type-success {
+    background-color: #28a745;
 }
