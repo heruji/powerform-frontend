@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import MyFormPanel from './MyFormPanel';
 
+// 主页
 class Home extends React.Component {
     render() {
         return (

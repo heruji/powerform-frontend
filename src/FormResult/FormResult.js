@@ -10,12 +10,14 @@ import CopyButton from '../component/CopyButton';
 import ItemTypeMapper from '../common/ItemTypeMapper';
 import './FormResult.css';
 
+// 表单反馈加载状态
 const STATUS = Object.freeze({
-    LOADING: 0,
-    SUCCESS: 1,
-    ERROR: 2
+    LOADING: 0, // 正在加载
+    SUCCESS: 1, // 加载成功
+    ERROR: 2 // 加载失败
 });
 
+// 展示表单反馈信息
 class FormResult extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +27,7 @@ class FormResult extends React.Component {
         };
     }
 
+    // 页面渲染后加载数据
     componentDidMount() {
         const init = {
             method: 'get',
@@ -50,6 +53,7 @@ class FormResult extends React.Component {
             .catch(this.handleError);
     }
 
+    // 处理fetch返回数据
     handleFetchResult = formResults => {
         if (this.state.status === STATUS.ERROR) {
             return;
@@ -62,6 +66,7 @@ class FormResult extends React.Component {
         }
     };
 
+    // 处理fetch返回数据
     handleFetchElement = formElements => {
         if (this.state.status === STATUS.ERROR) {
             return;
@@ -74,6 +79,7 @@ class FormResult extends React.Component {
         }
     };
 
+    // 处理加载失败
     handleError = () => {
         if (this.state.status === STATUS.ERROR) {
             return;
@@ -81,12 +87,14 @@ class FormResult extends React.Component {
         this.setState({ status: STATUS.ERROR })
     };
 
+    // 处理选择反馈事件
     handleSelect = (index) => {
         this.setState({
             selected: index
         });
     };
 
+    // 渲染反馈列表
     renderResultList = () => {
         if (this.formResults.length === 0) {
             return null;
@@ -120,6 +128,7 @@ class FormResult extends React.Component {
         );
     }
 
+    // 渲染反馈表单
     renderForm = () => {
         const { selected } = this.state;
         if (selected === null) {
@@ -149,14 +158,17 @@ class FormResult extends React.Component {
 
     render() {
         const { status } = this.state;
+        // 加载失败跳转错误页面
         if (status === STATUS.ERROR) {
             return (<Redirect to="/error" />);
         }
+        // 是否显示正在加载
         const resultPanelContent = status === STATUS.LOADING ? (
             <div style={{ marginTop: '45%' }}>
                 <Loading dark />
             </div>
         ) : this.renderResultList();
+        // 当前表单填写链接, 用于分享
         const url = `http://demo.heruji.me/powerform/display/${this.props.match.params.id}`;
         return (
             <React.Fragment>
@@ -166,6 +178,7 @@ class FormResult extends React.Component {
                         display={<QRCode size={35} value="display" />}
                     />
                     <CopyButton copyText={url} />
+                    {/* 导出表单链接 */}
                     <a className="export-btn-link" 
                         href={`http://api.heruji.me/powerform/form/${this.props.match.params.id}/result/xlsx`}>
                         导出 XLSX

@@ -1,5 +1,6 @@
 const STORE_KEY = 'my_forms';
 
+// 尝试存储表单
 export function tryStoreForm(title, form) {
     try {
         const json = localStorage.getItem(STORE_KEY);
@@ -11,6 +12,7 @@ export function tryStoreForm(title, form) {
     }
 }
 
+// 尝试获取表单
 export function tryGetForms() {
     try {
         const json = localStorage.getItem(STORE_KEY);
@@ -21,6 +23,7 @@ export function tryGetForms() {
     }
 }
 
+// 尝试清除表单
 export function tryRemoveForms() {
     try {
         localStorage.removeItem(STORE_KEY);

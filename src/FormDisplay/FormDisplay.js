@@ -18,16 +18,20 @@ const STATUS_SUBMITTING = 3;
 const STATUS_SUBMITTED = 4;
 const STATUS_SUBMIT_ERROR = 5;
 
+// 填表页面
 class FormDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             status: STATUS_LOADING
         };
+        // 填写内容
         this.result = [];
+        // 表单项列表
         this.formElements = [];
     }
 
+    // 页面渲染后加载表单项
     componentDidMount() {
         fetch(`http://api.heruji.me/powerform/form/${this.props.match.params.id}/element`, {
             method: 'get',
@@ -45,6 +49,7 @@ class FormDisplay extends React.Component {
             .catch(() => this.setState({ status: STATUS_LOAD_ERROR }));
     }
 
+    // 处理fetch返回结果
     handleFetchResult = formElements => {
         this.formElements = formElements;
         this.setState({
@@ -52,6 +57,7 @@ class FormDisplay extends React.Component {
         });
     };
 
+    // 处理填写表单事件
     handleChange = (elemKey, value, isOption) => {
         const index = this.result.findIndex(item => item.elemKey === elemKey);
         const type = isOption ? 'optionIds' : 'value';
@@ -63,6 +69,7 @@ class FormDisplay extends React.Component {
         // console.debug(this.result);
     };
 
+    // 处理表单填写内容的提交
     handleSubmit = () => {
         if (this.result.length !== this.formElements
             .filter(elem => elem.type !== 'form' && elem.type !== 'sep').length) {
@@ -94,6 +101,7 @@ class FormDisplay extends React.Component {
             });
     }
 
+    // 渲染表单项
     renderList = () => {
         return (
             <ol>
@@ -119,6 +127,7 @@ class FormDisplay extends React.Component {
         let panelContent;
         let buttonContent = "提交";
         switch (status) {
+            // 显示正在加载
             case STATUS_LOADING:
                 panelContent = (
                     <div className="display-loading">
@@ -126,16 +135,20 @@ class FormDisplay extends React.Component {
                     </div>
                 );
                 break;
+            // 显示正在提交
             case STATUS_SUBMITTING:
                 panelContent = this.renderList();
                 buttonContent = (<Loading />);
                 break;
+            // 加载完成后或者提交失败时正常渲染表单
             case STATUS_SUBMIT_ERROR:           // fall through
             case STATUS_SUCCESS:
                 panelContent = this.renderList();
                 break;
+            // 提交完成后跳转首页
             case STATUS_SUBMITTED:
                 return (<Redirect push to="/" />);
+            // 发生错误跳转错误页面
             default:
                 return (<Redirect to="/error" />);
         }

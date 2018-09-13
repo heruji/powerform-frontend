@@ -9,6 +9,7 @@ import './SubmitSuccess.css';
 
 const URL_PREFIX = 'http://demo.heruji.me/powerform';
 
+// 表单提交成功页面
 function SubmitSuccess(props) {
     if (!props.location.state || !props.location.state.form) {
         return (<Redirect to="/error" />);
